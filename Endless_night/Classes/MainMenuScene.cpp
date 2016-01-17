@@ -3,6 +3,7 @@
 #include "Definitions.h"
 #include "TheOptionsScene.h"
 #include "SimpleAudioEngine.h"
+#include "Quit.h"
 
 using namespace CocosDenshion;
 
@@ -49,8 +50,10 @@ bool MainMenuScene::init()
 	SimpleAudioEngine::getInstance()->playBackgroundMusic(MENU_SFX);//menu sound 
 
 	auto titleSprite = Sprite::create();//image
-	titleSprite->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height - titleSprite->getContentSize().height));
+	titleSprite->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
 	this->addChild(titleSprite);
+
+	//button mapping to other screens
 
 	//when click play it goes to the game scene
 	auto NewGame = MenuItemImage::create("newGame.png","newGame.png",CC_CALLBACK_1(MainMenuScene::GoToGameScene,this));
@@ -60,21 +63,22 @@ bool MainMenuScene::init()
 	auto options = MenuItemImage::create("options.png", "options.png", CC_CALLBACK_1(MainMenuScene::GoToTheOptionsScene, this));
 	options->setPosition(Point(visibleSize.width / 2.5 + origin.x, visibleSize.height / 3 + origin.y));
 
-	//credits
-	//auto creditsItem = MenuItemImage::create("credits.png", "credits.png", CC_CALLBACK_1(MainMenuScene::GoToGameScene, this));
-	//playItem->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 3 + origin.y));
+	auto closeItem = MenuItemImage::create("exit.png", "exit.png", CC_CALLBACK_1(MainMenuScene::menuCloseCallback, this));
+	closeItem->setPosition(Point(visibleSize.width / 1.5 + origin.x, visibleSize.height / 3 + origin.y));
 
-	//exit
-	//auto exitItem = MenuItemImage::create("exit.png", "exit.png", CC_CALLBACK_1(MainMenuScene::GoToGameScene, this));
-	//playItem->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 3 + origin.y));
-
-	auto menu = Menu::create(NewGame, NULL);
-	menu->setPosition(Point::ZERO);
-	this->addChild(menu);
-
+	
+	auto NewGameButton = Menu::create(NewGame, NULL);
+	NewGameButton->setPosition(Point::ZERO);
+	this->addChild(NewGameButton);
+	
 	auto optionsMenu = Menu::create(options, NULL);
 	optionsMenu->setPosition(Point::ZERO);
 	this->addChild(optionsMenu);
+
+	auto exit = Menu::create(closeItem, NULL);
+	exit->setPosition(Point::ZERO);
+	this->addChild(exit);
+	
     return true;
 }
 
@@ -90,7 +94,8 @@ void MainMenuScene::GoToTheOptionsScene(Ref *sender)//go to game scene method im
 	Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
 }
 
-
-
-
+void MainMenuScene::menuCloseCallback(Ref* pSender)
+{
+	Director::getInstance()->end();
+}
 

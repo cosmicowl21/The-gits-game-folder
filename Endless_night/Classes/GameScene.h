@@ -11,6 +11,9 @@ class GameScene : public cocos2d::Layer
 private:
 	Sprite* _player;
 	Sprite* _player2;
+
+	//void setPhysicsWorld(PhysicsWorld * world) { sceneWorld = world; };
+	//PhysicsWorld * sceneWorld;
 public:
 	static cocos2d::Scene* createScene();
 
@@ -20,8 +23,11 @@ public:
 
 	bool onTouchBegan(Touch * touch, Event *unused_event);
 
-	bool onContactBegan(PhysicsContact &contact);
+	void collisions();
 
+	// bool onContactBegin(PhysicsContact &contact);
+
+	bool onContactBegan(PhysicsContact &contact);
 	// a selector callback
 	void menuCloseCallback(cocos2d::Ref* pSender);
 

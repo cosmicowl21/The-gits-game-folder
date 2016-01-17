@@ -18,6 +18,7 @@ public:
 private:
 	void GoToTheOptionsScene(Ref *sender);
 	void GoToGameScene(Ref *sender);
+	void menuCloseCallback(cocos2d::Ref* pSender);
 };
 
 #endif // __MAIN_MENU_SCENE_H__

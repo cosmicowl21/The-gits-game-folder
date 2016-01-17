@@ -172,6 +172,11 @@ bool GameScene::onTouchBegan(Touch * touch, Event *unused_event)
 	return true;
 }
 
+void GameScene::collisions()
+{
+
+}
+
 bool GameScene::onContactBegan(PhysicsContact &contact)
 {
 	auto nodeEnemy = contact.getShapeA()->getBody()->getNode();//enemy 
