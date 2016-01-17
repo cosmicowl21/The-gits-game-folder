@@ -64,7 +64,7 @@ bool MainMenuScene::init()
 	options->setPosition(Point(visibleSize.width / 2.5 + origin.x, visibleSize.height / 3 + origin.y));
 
 	auto closeItem = MenuItemImage::create("exit.png", "exit.png", CC_CALLBACK_1(MainMenuScene::menuCloseCallback, this));
-	closeItem->setPosition(Point(visibleSize.width / 1.5 + origin.x, visibleSize.height / 3 + origin.y));
+	closeItem->setPosition(Point(visibleSize.width / 1.66 + origin.x, visibleSize.height / 3 + origin.y));
 
 	
 	auto NewGameButton = Menu::create(NewGame, NULL);
