@@ -93,7 +93,7 @@ bool GameScene::init()//initing the game so the scene can be made
 
 	// button to go back to the main menu 
 	auto menu = MenuItemImage::create("menu.png","menuClicked.png", CC_CALLBACK_1(GameScene::GoToMainMenuScene, this));
-	menu->setPosition(Point(winSize.width / 1 + origin.x, winSize.height / 1.0 + origin.y));
+	menu->setPosition(Point(winSize.width / 1 + origin.x, winSize.height / 1.0 + origin.y));// change the size of the image in your recouce folder to maxamise efficinty 
 	
 	auto backToMenu = Menu::create(menu, NULL);
 	backToMenu->setPosition(Point::ZERO);
