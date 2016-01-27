@@ -91,8 +91,9 @@ bool GameScene::init()//initing the game so the scene can be made
 	//playing the background music 
 	SimpleAudioEngine::getInstance()->playBackgroundMusic(BACKGROUND_MUSIC_SFX, true);
 
+	// button to go back to the main menu 
 	auto menu = MenuItemImage::create("menu.png","menuClicked.png", CC_CALLBACK_1(GameScene::GoToMainMenuScene, this));
-	menu->setPosition(Point(winSize.width / 1.5 + origin.x, winSize.height / 0.99 + origin.y));
+	menu->setPosition(Point(winSize.width / 1 + origin.x, winSize.height / 1.0 + origin.y));
 	
 	auto backToMenu = Menu::create(menu, NULL);
 	backToMenu->setPosition(Point::ZERO);

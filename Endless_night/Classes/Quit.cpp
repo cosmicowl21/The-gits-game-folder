@@ -1,4 +1,4 @@
-
+/*
 #include "Quit.h"
 
 
@@ -45,3 +45,4 @@ bool Quit::init()
     return true;
 }
 
+*/

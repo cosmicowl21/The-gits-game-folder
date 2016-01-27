@@ -1,3 +1,4 @@
+/*
 #ifndef __QUIT_H__
 #define __QUIT_H__
 
@@ -21,3 +22,4 @@ private:
 };
 
 #endif // __QUIT_H__
+*/
