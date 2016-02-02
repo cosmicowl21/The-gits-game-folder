@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="gamebackground" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="225">
+  <image source="../Dungeon_wall2.jpg" width="512" height="512"/>
+ </tileset>
+ <layer name="Background" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt1qWyFkAAhuH/4FKAgxcODgW3glvBrRxcCm4Ft4Jbwa3gVnAruBXc7oVn72F3Bnb2nXnadwFfVaVSqUNd6lGfBjSkEY1pQlOqEm1j1IzmtKCalrSiNW1oSzvaJ9zGqAM1dKQTnelCV7rRnR70TLiNUS9604e+9KM/AxjIIAYzJOE2RkMZxnBGMJJRjGYMYxnH+ITbGE1gIpOYzBSmMo3pzGAmsxJuY1TLbOYwl3nMZwELWcRiliTcxmgpy1jOClayitWsYS3rWJ9wG6MNbGQTm9nCVraxnR3sZFfCbYx2s4e97GM/BzjIIQ5zhKMJtzE6xnFOcJJTnOYMZznHeS4k3MboIpe4zBWuco3r3OAmt7idcBujO9zlHvd5wEMe8ZgnPOVZwm2MnvOCl7ziNW94yzve84GPCbcx+sRnvvCVb3znBz/5xW/+JNzGKIfPHsrhs4dqKv//Zw/l8NlDOXz2UA6fPZTDZw/l8NlDOXz2UA6fPZTDZw/l8NlDOXz2UA6fPZTDZy+VSqVSqVQqlUqlUqn0b/QXLFKnHA==
+  </data>
+ </layer>
+</map>

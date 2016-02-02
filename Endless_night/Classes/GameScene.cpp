@@ -110,6 +110,7 @@ void GameScene::addMonster(float dt)
 {
 	auto monster = Sprite::create("monster.png");//making the enemy 
 
+
 	//giving the monster some attributes 
 	auto monsterSize = monster->getContentSize();
 	auto physicsBody = PhysicsBody::createBox(Size(monsterSize.width, monsterSize.height),
@@ -123,7 +124,8 @@ void GameScene::addMonster(float dt)
 	physicsBody->setCollisionBitmask((int)PhysicsCategory::None);
 	physicsBody->setContactTestBitmask((int)PhysicsCategory::Projectile);
 	
-
+	auto origin = Director::getInstance()->getVisibleOrigin();//setting up the origin 
+	auto winSize = Director::getInstance()->getVisibleSize();// as well as the window size or the visible size as well 
 
 
 	monster->setPhysicsBody(physicsBody);// adding monster to the physics engine so it can be colided 
@@ -147,7 +149,7 @@ void GameScene::addMonster(float dt)
 
 	// 3
 	//moving and taking off when collided 
-	auto actionMove = MoveTo::create(randomDuration, Vec2(-monsterContentSize.width / 2, randomY));
+	auto actionMove = MoveTo::create(randomDuration, (Vec2(winSize.width * 0.1, winSize.height * 0.5)));
 	auto actionRemove = RemoveSelf::create();
 	monster->runAction(Sequence::create(actionMove, actionRemove, nullptr));
 }
