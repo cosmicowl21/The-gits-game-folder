@@ -2,6 +2,7 @@
 #include "SimpleAudioEngine.h"//iporting the audio engine
 #include "MainMenuScene.h"
 #include "Definitions.h"
+#include "GameOverScene.h"
 
 using namespace CocosDenshion; // namespace for audio engine 
 using namespace cocos2d;
@@ -72,6 +73,8 @@ bool GameScene::init()//initing the game so the scene can be made
 	srand((unsigned int)time(nullptr));
 	this->schedule(schedule_selector(GameScene::addMonster), 1);
 
+	this->schedule(schedule_selector(GameScene::GoToEndGameScene), 20.0f);
+
 	//getting the mouse click form the player
 	auto eventListener = EventListenerTouchOneByOne::create();
 	eventListener->onTouchBegan = CC_CALLBACK_2(GameScene::onTouchBegan, this);
@@ -137,8 +140,8 @@ void GameScene::addMonster(float dt)
 	this->addChild(monster);//adding enemy to the layer 
 
 	// 2
-	int minDuration = 2.0;
-	int maxDuration = 4.0;
+	int minDuration = 10.0;
+	int maxDuration = 14.0;
 	int rangeDuration = maxDuration - minDuration;
 	int randomDuration = (rand() % rangeDuration) + minDuration;
 
@@ -232,5 +235,11 @@ void GameScene::menuCloseCallback(Ref* pSender)// setting up the close button "q
 	void GameScene::GoToMainMenuScene(Ref *sender)
 	{
 		auto scene = MainMenuScene::createScene();
+		Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
+	}
+
+	void GameScene::GoToEndGameScene( float dt)
+	{
+		auto scene = GameOverScene::createScene();
 		Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
 	}
