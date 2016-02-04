@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" nextobjectid="15">
+ <tileset firstgid="1" name="Stone walls" tilewidth="32" tileheight="32" tilecount="120">
+  <image source="../../Program Files (x86)/Tiled/tileset/tileset/Medieval-tileset.png" width="480" height="256"/>
+ </tileset>
+ <tileset firstgid="121" name="bushes" tilewidth="32" tileheight="32" tilecount="1">
+  <image source="../../Program Files (x86)/Tiled/tileset/tileset/qubodup-bush_berries_0.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="122" name="Tower 1" tilewidth="32" tileheight="32" tilecount="1">
+  <image source="../../Program Files (x86)/Tiled/tileset/tileset/tower 1.jpg" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="123" name="Tower 2" tilewidth="32" tileheight="32" tilecount="1">
+  <image source="../../Program Files (x86)/Tiled/tileset/tileset/Tower 2.jpg" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="124" name="Tower 3" tilewidth="32" tileheight="32" tilecount="1">
+  <image source="../../Program Files (x86)/Tiled/tileset/tileset/Tower 3.png" width="32" height="32"/>
+ </tileset>
+ <layer name="Backround" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt2dEJgDAQRMH82YcF2X85YgkqJw+ZgSsgWfYIZF9r7UPDfde9HQMjj2fk0XLd2zYw8nhGP1rk0TK1r7YvD/Ej+tEijxbvqxb9aJFHi33Voh8t8mixr1r0o0UeLfZVy9RfrTwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3jkBl5FbBA==
+  </data>
+ </layer>
+ <layer name="Towers" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt1DENADAMwLACH/gxqPZNkWwEuTID0HF+BwA88iugwq+ACr8CKvwKqPArAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANhdFDkC6Q==
+  </data>
+ </layer>
+</map>
