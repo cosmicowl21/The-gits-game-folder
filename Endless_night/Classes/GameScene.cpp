@@ -73,7 +73,7 @@ bool GameScene::init()//initing the game so the scene can be made
 	srand((unsigned int)time(nullptr));
 	this->schedule(schedule_selector(GameScene::addMonster), 1);
 
-	this->schedule(schedule_selector(GameScene::GoToEndGameScene), 20.0f);
+	//this->schedule(schedule_selector(GameScene::GoToEndGameScene), 20.0f);
 
 	//getting the mouse click form the player
 	auto eventListener = EventListenerTouchOneByOne::create();
@@ -90,6 +90,8 @@ bool GameScene::init()//initing the game so the scene can be made
 	auto contactListener = EventListenerPhysicsContact::create();
 	contactListener->onContactBegin = CC_CALLBACK_1(GameScene::onContactBegan, this);
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
+	//auto scoreChecker = EventListenerCustom::create();
+	//this ->addChild
 
 	//playing the background music 
 	SimpleAudioEngine::getInstance()->playBackgroundMusic(BACKGROUND_MUSIC_SFX, true);
@@ -102,7 +104,44 @@ bool GameScene::init()//initing the game so the scene can be made
 	backToMenu->setPosition(Point::ZERO);
 	this->addChild(backToMenu);
 
-	return true;// returnign that all is ok as is a bool(booean class)
+	/*
+	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+
+	const float ScoreFontSize = 24;
+	const float ScorePositionX = 24;
+	const float ScorePositionY = 12;
+
+	score = CCLabelTTF::create("Score 0", "fonts/Arial", ScoreFontSize);
+	score->setAnchorPoint(ccp(0, 1));
+	score->setPosition(ccp(ScorePositionX, visibleSize.height - ScorePositionY));
+	this->addChild(score);
+
+	highscore = CCLabelTTF::create("Best 0", "fonts/Marker Felt.ttf", ScoreFontSize);
+	highscore->setAnchorPoint(ccp(0, 1));
+	highscore->setPosition(ccp(ScorePositionX, score->boundingBox().origin.y - ScorePositionY));
+	this->addChild(highscore);
+
+	gameScore = 0;
+	*/
+	const float ScoreFontSize = 24;
+	const float ScorePositionX = 24;
+	const float ScorePositionY = 12;
+	score = 0;
+
+	// Font for Displaying Score
+	__String *tempScore = __String::createWithFormat("%i", score);
+
+	scoreLabel = Label::create(tempScore->getCString(), "fonts/Marker Felt.ttf", winSize.height * SCORE_FONT_SIZE);
+	scoreLabel->setColor(Color3B::WHITE);
+	scoreLabel->setAnchorPoint(ccp(0, 1));
+	scoreLabel->setPosition(Point(winSize.width / 2 + origin.x, winSize.height * 0.75 + origin.y));
+
+	
+
+	this->addChild(scoreLabel, 1000);
+
+	
+	return true;// returnign that all is ok as is a bool(booean class) 
 
 }//end is init()
 
@@ -219,7 +258,20 @@ bool GameScene::onContactBegan(PhysicsContact &contact)
 	nodeEnemy->removeFromParent();//remove the enemy 
 	SimpleAudioEngine::getInstance()->playEffect(DEATH_SOUND_SFX);//enemy dying sound
 	nodeProjectile->removeFromParent();//remove the projectile 
+	CCLOG("Point Scored");
+	score++;
 
+	__String*tempScore = __String::createWithFormat("%i", score);
+	scoreLabel->setString(tempScore->getCString());
+	//if score reaches 10 new level or end game scene with transitionFade to gameOverScene or new scene
+	// unsigned int score is used to check if score reaches 10
+	if (score == 51)
+	{
+		auto scene = GameOverScene::createScene();
+		Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
+	}
+
+	
 	
 	return true;
 }
@@ -242,6 +294,16 @@ void GameScene::menuCloseCallback(Ref* pSender)// setting up the close button "q
 
 	void GameScene::GoToEndGameScene( float dt)
 	{
-		auto scene = GameOverScene::createScene();
-		Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
+		// if  statement moved to on contact begin method that checks if enemy killed reaches 10 or specified number
+	
+	}
+
+	void GameScene::SetIsScored()
+	{
+		scored = true;
+	}
+
+	bool GameScene::GetIsScored()
+	{
+		return scored;
 	}

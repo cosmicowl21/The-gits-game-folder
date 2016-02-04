@@ -2,6 +2,7 @@
 #define __GAME_SCENE_H__
 
 #include "cocos2d.h"// brining in cocos funcality 
+#include "Box2D/Box2D.h"
 
 using namespace cocos2d; // namespace for cococs so you dont have to use cocos2d:: every time 
 
@@ -13,6 +14,9 @@ private:
 	Sprite* _player;
 	Sprite* _player2;
 
+	unsigned int score;
+	cocos2d::Label *scoreLabel;
+	//int gameScore;
 	//might be needed not sure yet 
 	//void setPhysicsWorld(PhysicsWorld * world) { sceneWorld = world; };
 	//PhysicsWorld * sceneWorld;
@@ -34,6 +38,13 @@ public:
 	void menuCloseCallback(cocos2d::Ref* pSender);
 
 	int enemiesKilled;
+
+	//cocos2d::LabelTTF *score;
+	//cocos2d::LabelTTF *highscore;
+
+	bool scored;
+	void SetIsScored();
+	bool GetIsScored();
 
 	void GoToMainMenuScene(Ref *sender);
 	void GoToEndGameScene(float dt);
