@@ -15,8 +15,8 @@ private:
 	Sprite* _player2;
 
 	unsigned int score;
-	cocos2d::Label *scoreLabel;
-	//int gameScore;
+	cocos2d::Label * scoreLabel;
+	
 	//might be needed not sure yet 
 	//void setPhysicsWorld(PhysicsWorld * world) { sceneWorld = world; };
 	//PhysicsWorld * sceneWorld;
@@ -38,16 +38,13 @@ public:
 	void menuCloseCallback(cocos2d::Ref* pSender);
 
 	int enemiesKilled;
-
-	//cocos2d::LabelTTF *score;
-	//cocos2d::LabelTTF *highscore;
-
+	
 	bool scored;
 	void SetIsScored();
 	bool GetIsScored();
-
 	void GoToMainMenuScene(Ref *sender);
-	void GoToEndGameScene(float dt);
+	void GoToGameOverScene();
+	
 
 	// implement the "static create()" method manually
 	CREATE_FUNC(GameScene);

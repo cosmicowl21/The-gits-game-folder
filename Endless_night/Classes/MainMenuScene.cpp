@@ -1,9 +1,12 @@
+
+
 #include "MainMenuScene.h"
 #include "GameScene.h"
 #include "Definitions.h"
 #include "TheOptionsScene.h"
 #include "SimpleAudioEngine.h"
 #include "Quit.h"
+#include "HowToScene.h"
 
 using namespace CocosDenshion;
 
@@ -21,7 +24,7 @@ Scene* MainMenuScene::createScene()
 	auto layer = MainMenuScene::create();
 	
 
-    // add layer as a child to scene
+    // add layer as a child to scene banna
     scene->addChild(layer);
 
     // return the scene
@@ -35,7 +38,7 @@ bool MainMenuScene::init()
 {
     //////////////////////////////
     // 1. super init first
-    if ( !Layer::init() )
+	if (!Layer::init())
     {
         return false;
     }
@@ -56,14 +59,14 @@ bool MainMenuScene::init()
 	//button mapping to other screens
 
 	//when click play it goes to the game scene
-	auto NewGame = MenuItemImage::create("newGame.png","newGame.png",CC_CALLBACK_1(MainMenuScene::GoToGameScene,this));
+	auto NewGame = MenuItemImage::create("newGame.png","newGameClicked.png",CC_CALLBACK_1(MainMenuScene::GoToGameScene,this));
 	NewGame->setPosition(Point(visibleSize.width / 5 + origin.x, visibleSize.height / 5 + origin.y));
 
 	//options
-	auto options = MenuItemImage::create("options.png", "options.png", CC_CALLBACK_1(MainMenuScene::GoToTheOptionsScene, this));
+	auto options = MenuItemImage::create("options.png", "optionsClicked.png", CC_CALLBACK_1(MainMenuScene::GoToTheOptionsScene, this));
 	options->setPosition(Point(visibleSize.width / 2.5 + origin.x, visibleSize.height / 5 + origin.y));
 
-	auto closeItem = MenuItemImage::create("exit.png", "exit.png", CC_CALLBACK_1(MainMenuScene::menuCloseCallback, this));
+	auto closeItem = MenuItemImage::create("exit.png", "exitClicked.png", CC_CALLBACK_1(MainMenuScene::menuCloseCallback, this));
 	closeItem->setPosition(Point(visibleSize.width / 1.66 + origin.x, visibleSize.height / 5 + origin.y));
 
 	
@@ -79,7 +82,7 @@ bool MainMenuScene::init()
 	exit->setPosition(Point::ZERO);
 	this->addChild(exit);
 	
-    return true;
+    return true; //apple
 }
 
 void MainMenuScene::GoToGameScene(Ref *sender)//go to game scene method implementation 
@@ -99,3 +102,4 @@ void MainMenuScene::menuCloseCallback(Ref* pSender)
 	Director::getInstance()->end();
 }
 
+// end of game scene woo
