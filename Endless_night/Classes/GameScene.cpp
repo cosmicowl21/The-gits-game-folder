@@ -66,7 +66,7 @@ bool GameScene::init()//initing the game so the scene can be made
 
 	//adding monsters randomly at 1 second intervial 
 	srand((unsigned int)time(nullptr));
-	this->schedule(schedule_selector(GameScene::addMonster), 1);
+	this->schedule(schedule_selector(GameScene::addMonster),1 );
 
 	//this->schedule(schedule_selector(GameScene::GoToGameOverScene), 20.0f);
 
@@ -213,10 +213,6 @@ bool GameScene::onTouchBegan(Touch * touch, Event *unused_event)
 	return true;
 }
 
-void GameScene::collisions() // unused method as i am trying to make my own collisions work for the mosnters without the engine 
-{
-
-}
 
 bool GameScene::onContactBegan(PhysicsContact &contact)
 {
