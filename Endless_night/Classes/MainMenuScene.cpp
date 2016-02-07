@@ -66,7 +66,7 @@ bool MainMenuScene::init()
 	auto options = MenuItemImage::create("options.png", "optionsClicked.png", CC_CALLBACK_1(MainMenuScene::GoToTheOptionsScene, this));
 	options->setPosition(Point(visibleSize.width / 2.5 + origin.x, visibleSize.height / 5 + origin.y));
 
-	auto closeItem = MenuItemImage::create("exit.png", "exitClicked.png", CC_CALLBACK_1(MainMenuScene::menuCloseCallback, this));
+	auto closeItem = MenuItemImage::create("quit.png", "exitClicked.png", CC_CALLBACK_1(MainMenuScene::menuCloseCallback, this));
 	closeItem->setPosition(Point(visibleSize.width / 1.66 + origin.x, visibleSize.height / 5 + origin.y));
 
 	
