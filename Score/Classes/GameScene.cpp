@@ -102,7 +102,10 @@ bool GameScene::init()//initing the game so the scene can be made
 	backToMenu->setPosition(Point::ZERO);
 	this->addChild(backToMenu);
 
-	__String *tempScore = __String::createWithFormat("%i", score);// Font for Displaying Score
+	score = 0;
+
+    // Font for Displaying Score
+	__String *tempScore = __String::createWithFormat("%i", score);
 
 	scoreLabel = Label::create(tempScore->getCString(), "fonts/Marker Felt.ttf", winSize.height * SCORE_FONT_SIZE);
 	scoreLabel->setColor(Color3B::WHITE);
@@ -229,11 +232,17 @@ bool GameScene::onContactBegan(PhysicsContact &contact)
 	SimpleAudioEngine::getInstance()->playEffect(DEATH_SOUND_SFX);//enemy dying sound
 	nodeProjectile->removeFromParent();//remove the projectile 
 
+	CCLOG("Point Scored");
+	score++;
+
+	__String *tempScore = __String::createWithFormat("%i", score);
+	scoreLabel->setString(tempScore->getCString());
+
 	
 	return true;
 }
 
-bool GameScene::scorePoint(PhysicsContact &contact)// scoring points
+/*bool GameScene::scorePoint(PhysicsContact &contact)// scoring points
 {
 	PhysicsBody *a = contact.getShapeA()->getBody();
 	PhysicsBody *b = contact.getShapeB()->getBody();
@@ -246,7 +255,7 @@ bool GameScene::scorePoint(PhysicsContact &contact)// scoring points
 		scoreLabel->setString(tempScore->getCString());
 	}
 	return true;
-}
+}*/
 
 void GameScene::menuCloseCallback(Ref* pSender)// setting up the close button "quit"
 {
