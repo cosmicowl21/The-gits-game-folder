@@ -1,37 +1,34 @@
-
-#ifndef __LEVEL_2_SCENE_H__
+#ifndef __LEVEL_2_SCENE_H__ // used so that hte header will only be used once per compile
 #define __LEVEL_2_SCENE_H__
 
-#include "cocos2d.h"
-using namespace cocos2d;
+#include "cocos2d.h"// brining in cocos funcality 
+#include "Box2D/Box2D.h"
+using namespace cocos2d; // namespace for cococs so you dont have to use cocos2d:: every time 
 
 class Level_2Scene : public cocos2d::Layer
 {
+
 private:
-	Sprite*_player;
-	Sprite*_player2;
+	Sprite* _player;
+	Sprite* _player2;
 	unsigned int score;
 	cocos2d::Label * scoreLabel;
 
 public:
-	// creating everything we need for the cpp file
-    static cocos2d::Scene* createScene();
-    virtual bool init();
-	void AddMiniBoss(float dt);
-	bool onTouchBegan(Touch * touch, Event * unused_event);
+	static cocos2d::Scene* createScene();// creating the scene from here 
+	virtual bool init();// creating the bool init calss 
+	void addMonster(float dt);// creating the monster class
+	bool onTouchBegan(Touch * touch, Event *unused_event);
 	bool onContactBegan(PhysicsContact &contact);
-	void menuCloseClallback(cocos2d::Ref * pSender);
+	void menuCloseCallback(cocos2d::Ref* pSender);
 	bool scored;
 	void SetIsScored();
-	bool GetIsSocred();
-	void GoToMainMenucene();
+	bool GetIsScored();
+	void GoToMainMenuScene(Ref *sender);
 	void GoToGameOverScene();
-    
+
 	CREATE_FUNC(Level_2Scene);
 
-private:
-	
-	void GoToQuitScene(Ref *sender);
 };
 
-#endif // __QUIT_H__
+#endif // __LEVEL_2SCENE_H__

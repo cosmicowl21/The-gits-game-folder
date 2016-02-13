@@ -28,6 +28,7 @@ public:
 	void GoToGameOverScene();
 	
 	CREATE_FUNC(GameScene);
+	
 };
 
 #endif // __GAME_SCENE_H__

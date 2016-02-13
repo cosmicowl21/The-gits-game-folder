@@ -75,11 +75,7 @@ bool GameScene::init()//initing the game so the scene can be made
 	eventListener->onTouchBegan = CC_CALLBACK_2(GameScene::onTouchBegan, this);
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(eventListener, _player);
 
-	// trying to get the shooting mechanic working for second tower 
-	//breaking because of this ????????
-	//auto eventListener2 = EventListenerTouchOneByOne::create();
-	//eventListener2->onTouchBegan = CC_CALLBACK_2(GameScene::onTouchBegan, this);
-	//this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(eventListener2, _player2);//getting the mouse click form the player
+	// second tower will go here, have to get tbe collisions working for the aim
 
 
 	auto contactListener = EventListenerPhysicsContact::create();
