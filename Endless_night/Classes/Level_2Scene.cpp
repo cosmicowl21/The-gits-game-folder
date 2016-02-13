@@ -2,6 +2,7 @@
 #include "SimpleAudioEngine.h"//iporting the audio engine
 #include "MainMenuScene.h"
 #include "Definitions.h"
+#include "Level_3_scene.h"
 #include "GameOverScene.h"
 
 
@@ -64,8 +65,8 @@ bool Level_2Scene::init()//initing the game so the scene can be made
 	this->addChild(_player);//adding the player to the scene
 
 	//adding monsters randomly at 1 second intervial 
-	srand((unsigned int)time(nullptr));
-	this->schedule(schedule_selector(Level_2Scene::addMonster), 1);
+	//srand((unsigned int)time(nullptr));
+	this->schedule(schedule_selector(Level_2Scene::addMonster), 0.7);
 
 	//this->schedule(schedule_selector(GameScene::GoToGameOverScene), 20.0f);
 
@@ -228,7 +229,7 @@ bool Level_2Scene::onContactBegan(PhysicsContact &contact)
 
 	if (score == 20)
 	{
-		auto scene = Level_2Scene::createScene();
+		auto scene = Level_3_Scene::createScene();
 		Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
 	}
 
