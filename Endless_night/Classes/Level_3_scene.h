@@ -1,11 +1,11 @@
-#ifndef __LEVEL_2_SCENE_H__ // used so that hte header will only be used once per compile
-#define __LEVEL_2_SCENE_H__
+#ifndef __LEVEL_3_SCENE_H__ // used so that hte header will only be used once per compile
+#define __LEVEL_3_SCENE_H__
 
 #include "cocos2d.h"// brining in cocos funcality 
 #include "Box2D/Box2D.h"
 using namespace cocos2d; // namespace for cococs so you dont have to use cocos2d:: every time 
 
-class Level_2Scene : public cocos2d::Layer
+class Level_3_Scene : public cocos2d::Layer
 {
 
 private:
@@ -27,7 +27,7 @@ public:
 	void GoToMainMenuScene(Ref *sender);
 	void GoToGameOverScene();
 
-	CREATE_FUNC(Level_2Scene);
+	CREATE_FUNC(Level_3_Scene);
 
 };
 

@@ -1,8 +1,7 @@
-#include "GameScene.h"//bringing in the game scene
+#include "Level_3_Scene.h"//bringing in the game scene
 #include "SimpleAudioEngine.h"//iporting the audio engine
 #include "MainMenuScene.h"
 #include "Definitions.h"
-#include "Level_2Scene.h"
 #include "GameOverScene.h"
 
 
@@ -12,7 +11,7 @@ using namespace cocos2d;
 
 USING_NS_CC;
 
-#define BACKGROUND_MUSIC_SFX "main-game-theme.mp3"//sound init for music
+#define BOSS_MUSIC_SFX "Boss.mp3"//sound init for music
 #define TOWER_SHOOTING_SFX "grenade.mp3" //sound init for music
 #define DEATH_SOUND_SFX "whip.mp3"//sound for the enemy death 
 #define COCOS2D_DEBUG 1
@@ -25,7 +24,7 @@ enum class PhysicsCategory
 	//All = PhysicsCategory::Monster | PhysicsCategory::Projectile // 3
 };
 
-Scene* GameScene::createScene()
+Scene* Level_3_Scene::createScene()
 {
 	// 'scene' is an autorelease object
 	auto scene = Scene::createWithPhysics();//creating the scene with added physcis engine 
@@ -33,7 +32,7 @@ Scene* GameScene::createScene()
 	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);//red box around colisions
 
 	// 'layer' is an autorelease object
-	auto layer = GameScene::create();//creating the game layer 
+	auto layer = Level_3_Scene::create();//creating the game layer 
 
 	// add layer as a child to scene
 	scene->addChild(layer);//adding the layer to the scene 
@@ -43,7 +42,7 @@ Scene* GameScene::createScene()
 }
 
 // on "init" you need to initialize your instance
-bool GameScene::init()//initing the game so the scene can be made 
+bool Level_3_Scene::init()//initing the game so the scene can be made 
 {
 	//////////////////////////////
 	// 1. super init first
@@ -65,28 +64,28 @@ bool GameScene::init()//initing the game so the scene can be made
 	this->addChild(_player);//adding the player to the scene
 
 	//adding monsters randomly at 1 second intervial 
-	srand((unsigned int)time(nullptr));
-	this->schedule(schedule_selector(GameScene::addMonster),1 );
+	//srand((unsigned int)time(nullptr));
+	this->schedule(schedule_selector(Level_3_Scene::addMonster), 0.4);
 
 	//this->schedule(schedule_selector(GameScene::GoToGameOverScene), 20.0f);
 
 	//getting the mouse click form the player
 	auto eventListener = EventListenerTouchOneByOne::create();
-	eventListener->onTouchBegan = CC_CALLBACK_2(GameScene::onTouchBegan, this);
+	eventListener->onTouchBegan = CC_CALLBACK_2(Level_3_Scene::onTouchBegan, this);
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(eventListener, _player);
 
 	// second tower will go here, have to get tbe collisions working for the aim
 
 
 	auto contactListener = EventListenerPhysicsContact::create();
-	contactListener->onContactBegin = CC_CALLBACK_1(GameScene::onContactBegan, this);
+	contactListener->onContactBegin = CC_CALLBACK_1(Level_3_Scene::onContactBegan, this);
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
 
 	//playing the background music 
-	SimpleAudioEngine::getInstance()->playBackgroundMusic(BACKGROUND_MUSIC_SFX, true);
+	SimpleAudioEngine::getInstance()->playBackgroundMusic(BOSS_MUSIC_SFX, true);
 
 	// button to go back to the main menu 
-	auto menu = MenuItemImage::create("menu.png", "menuClicked.png", CC_CALLBACK_1(GameScene::GoToMainMenuScene, this));
+	auto menu = MenuItemImage::create("menu.png", "menuClicked.png", CC_CALLBACK_1(Level_3_Scene::GoToMainMenuScene, this));
 	menu->setPosition(Point(winSize.width / 1.1 + origin.x, winSize.height / 1.1 + origin.y));// change the size of the image in your recouce folder to maxamise efficinty 
 
 	auto backToMenu = Menu::create(menu, NULL);
@@ -101,18 +100,18 @@ bool GameScene::init()//initing the game so the scene can be made
 	__String *tempScore = __String::createWithFormat("%i", score);
 
 	scoreLabel = Label::create(tempScore->getCString(), "fonts/Marker felt.ttf", winSize.height* SCORE_FONT_SIZE);
-	scoreLabel->setColor(Color3B::RED);
+	scoreLabel->setColor(Color3B::WHITE);
 	scoreLabel->setAnchorPoint(ccp(0, 1));
 	scoreLabel->setPosition(winSize.width / 2 + origin.x, winSize.height * SCORE_FONT_SIZE);
 
 	this->addChild(scoreLabel, 1000);
 	return true;// returning that all is ok as is a bool(booean class)
 
-	
+
 
 }//end is init()
 
-void GameScene::addMonster(float dt)
+void Level_3_Scene::addMonster(float dt)
 {
 	auto monster = Sprite::create("monster.png");//making the enemy 
 
@@ -158,7 +157,7 @@ void GameScene::addMonster(float dt)
 	monster->runAction(Sequence::create(actionMove, actionRemove, nullptr));
 }
 
-bool GameScene::onTouchBegan(Touch * touch, Event *unused_event)
+bool Level_3_Scene::onTouchBegan(Touch * touch, Event *unused_event)
 {
 	// 2
 	//setting up the vecs and what they are doing 
@@ -210,7 +209,7 @@ bool GameScene::onTouchBegan(Touch * touch, Event *unused_event)
 }
 
 
-bool GameScene::onContactBegan(PhysicsContact &contact)
+bool Level_3_Scene::onContactBegan(PhysicsContact &contact)
 {
 	auto nodeEnemy = contact.getShapeA()->getBody()->getNode();//could be enemy or visa veras 
 	auto nodeProjectile = contact.getShapeB()->getBody()->getNode();//could be projectile or visa versa 
@@ -227,28 +226,28 @@ bool GameScene::onContactBegan(PhysicsContact &contact)
 	scoreLabel->setString(tempScore->getCString());
 	//if score reaches 10 new level or end game scene with transmitions to gameOverscene or new scene 
 
-	if (score == 10)
+	if (score == 30)
 	{
-		auto scene = Level_2Scene::createScene();
+		auto scene = Level_3_Scene::createScene();
 		Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
 	}
 
 	return true;
 }
 
-void GameScene::SetIsScored()
+void Level_3_Scene::SetIsScored()
 {
 	scored = true;
 }
 
-bool GameScene::GetIsScored()
+bool Level_3_Scene::GetIsScored()
 {
 	return scored;
 }
 
 
 
-void GameScene::menuCloseCallback(Ref* pSender)// setting up the close button "quit"
+void Level_3_Scene::menuCloseCallback(Ref* pSender)// setting up the close button "quit"
 {
 	Director::getInstance()->end();
 
@@ -258,7 +257,7 @@ void GameScene::menuCloseCallback(Ref* pSender)// setting up the close button "q
 
 }
 
-void GameScene::GoToMainMenuScene(Ref *sender)
+void Level_3_Scene::GoToMainMenuScene(Ref *sender)
 {
 	auto scene = MainMenuScene::createScene();
 	Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
@@ -266,6 +265,6 @@ void GameScene::GoToMainMenuScene(Ref *sender)
 
 //void GameScene::GoToGameOverScene(float dt)
 //{
-	//auto scene = GameOverScene::createScene();
-	//Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
+//auto scene = GameOverScene::createScene();
+//Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
 //}
