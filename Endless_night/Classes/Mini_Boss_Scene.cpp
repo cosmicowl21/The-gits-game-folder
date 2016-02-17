@@ -1,8 +1,7 @@
-#include "Level_2Scene.h"//bringing in the game scene
+#include "Mini_Boss_Scene.h"//bringing in the game scene
 #include "SimpleAudioEngine.h"//iporting the audio engine
 #include "MainMenuScene.h"
 #include "Definitions.h"
-#include "Level_3_scene.h"
 #include "GameOverScene.h"
 
 
@@ -20,12 +19,12 @@ USING_NS_CC;
 enum class PhysicsCategory
 {
 	None = 0,
-	Monster = (1 << 0),    // 1
+	Boss = (1 << 0),    // 1
 	Projectile = (1 << 1), // 2
 	//All = PhysicsCategory::Monster | PhysicsCategory::Projectile // 3
 };
 
-Scene* Level_2Scene::createScene()
+Scene* Mini_Boss_Scene::createScene()
 {
 	// 'scene' is an autorelease object
 	auto scene = Scene::createWithPhysics();//creating the scene with added physcis engine 
@@ -33,7 +32,7 @@ Scene* Level_2Scene::createScene()
 	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);//red box around colisions
 
 	// 'layer' is an autorelease object
-	auto layer = Level_2Scene::create();//creating the game layer 
+	auto layer = Mini_Boss_Scene::create();//creating the game layer 
 
 	// add layer as a child to scene
 	scene->addChild(layer);//adding the layer to the scene 
@@ -43,7 +42,7 @@ Scene* Level_2Scene::createScene()
 }
 
 // on "init" you need to initialize your instance
-bool Level_2Scene::init()//initing the game so the scene can be made 
+bool Mini_Boss_Scene::init()//initing the game so the scene can be made 
 {
 	//////////////////////////////
 	// 1. super init first
@@ -64,29 +63,31 @@ bool Level_2Scene::init()//initing the game so the scene can be made
 	_player->setPosition(Vec2(winSize.width * 0.1, winSize.height * 0.5));//setting the players location 
 	this->addChild(_player);//adding the player to the scene
 
-	//adding monsters randomly at 1 second intervial 
+
+	// this is not used now as the mini boss is the only enemy on screen
+	//adding monsters randomly at ? per second intervial 
 	//srand((unsigned int)time(nullptr));
-	this->schedule(schedule_selector(Level_2Scene::addMonster), 0.7);
+//	this->schedule(schedule_selector(Mini_Boss_Scene::addMonster), 0.4);
 
 	//this->schedule(schedule_selector(GameScene::GoToGameOverScene), 20.0f);
 
 	//getting the mouse click form the player
 	auto eventListener = EventListenerTouchOneByOne::create();
-	eventListener->onTouchBegan = CC_CALLBACK_2(Level_2Scene::onTouchBegan, this);
+	eventListener->onTouchBegan = CC_CALLBACK_2(Mini_Boss_Scene::onTouchBegan, this);
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(eventListener, _player);
 
 	// second tower will go here, have to get tbe collisions working for the aim
 
 
 	auto contactListener = EventListenerPhysicsContact::create();
-	contactListener->onContactBegin = CC_CALLBACK_1(Level_2Scene::onContactBegan, this);
+	contactListener->onContactBegin = CC_CALLBACK_1(Mini_Boss_Scene::onContactBegan, this);
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
 
 	//playing the background music 
 	SimpleAudioEngine::getInstance()->playBackgroundMusic(BOSS_MUSIC_SFX, true);
 
 	// button to go back to the main menu 
-	auto menu = MenuItemImage::create("menu.png", "menuClicked.png", CC_CALLBACK_1(Level_2Scene::GoToMainMenuScene, this));
+	auto menu = MenuItemImage::create("menu.png", "menuClicked.png", CC_CALLBACK_1(Mini_Boss_Scene::GoToMainMenuScene, this));
 	menu->setPosition(Point(winSize.width / 1.1 + origin.x, winSize.height / 1.1 + origin.y));// change the size of the image in your recouce folder to maxamise efficinty 
 
 	auto backToMenu = Menu::create(menu, NULL);
@@ -111,8 +112,8 @@ bool Level_2Scene::init()//initing the game so the scene can be made
 
 
 }//end is init()
-
-void Level_2Scene::addMonster(float dt)
+/*
+void Mini_Boss_Scene::addMonster(float dt)
 {
 	auto monster = Sprite::create("monster.png");//making the enemy 
 
@@ -156,9 +157,57 @@ void Level_2Scene::addMonster(float dt)
 	auto actionMove = MoveTo::create(randomDuration, Vec2(-monsterContentSize.width / 2, randomY));
 	auto actionRemove = RemoveSelf::create();
 	monster->runAction(Sequence::create(actionMove, actionRemove, nullptr));
-}
+}//end of monster 
+*/// this is for adding the monsters to the scene , not used at the moment
 
-bool Level_2Scene::onTouchBegan(Touch * touch, Event *unused_event)
+void Mini_Boss_Scene::addMiniBoss(float dt)
+{
+	auto MiniBoss = Sprite::create("miniboss1.png");//making the enemy 
+
+	//giving the monster some attributes 
+	auto MiniBossSize = MiniBoss->getContentSize();
+	auto physicsBody = PhysicsBody::createBox(Size(MiniBossSize.width, MiniBossSize.height),
+		PhysicsMaterial(0.1f, 1.0f, 0.0f));
+
+	//setting up the physics 
+	// 2
+	physicsBody->setDynamic(true);
+	// 3
+	physicsBody->setCategoryBitmask((int)PhysicsCategory::Boss);
+	physicsBody->setCollisionBitmask((int)PhysicsCategory::None);
+	physicsBody->setContactTestBitmask((int)PhysicsCategory::Projectile);
+
+
+
+
+	MiniBoss->setPhysicsBody(physicsBody);// adding monster to the physics engine so it can be colided 
+	// 1
+	// giving the monster some movement and coordnates
+	auto MiniBossContentSize = MiniBoss->getContentSize();
+	auto selfContentSize = this->getContentSize();
+	int minY = MiniBossContentSize.height / 2;
+	int maxY = selfContentSize.height - MiniBossContentSize.height / 2;
+	int rangeY = maxY - minY;
+	int randomY = (rand() % rangeY) + minY;
+
+	MiniBoss->setPosition(Vec2(selfContentSize.width + MiniBossContentSize.width / 2, randomY));
+	this->addChild(MiniBoss);//adding enemy to the layer 
+
+	// 2
+	int minDuration = 10.0;
+	int maxDuration = 14.0;
+	int rangeDuration = maxDuration - minDuration;
+	int randomDuration = (rand() % rangeDuration) + minDuration;
+
+	// 3
+	//moving and taking off when collided 
+	auto actionMove = MoveTo::create(randomDuration, Vec2(-MiniBossContentSize.width / 2, randomY));
+	auto actionRemove = RemoveSelf::create();
+	MiniBoss->runAction(Sequence::create(actionMove, actionRemove, nullptr));
+
+}// end of mini boss
+
+bool Mini_Boss_Scene::onTouchBegan(Touch * touch, Event *unused_event)
 {
 	// 2
 	//setting up the vecs and what they are doing 
@@ -186,7 +235,7 @@ bool Level_2Scene::onTouchBegan(Touch * touch, Event *unused_event)
 	physicsBody->setDynamic(true);
 	physicsBody->setCategoryBitmask((int)PhysicsCategory::Projectile);
 	physicsBody->setCollisionBitmask((int)PhysicsCategory::None);
-	physicsBody->setContactTestBitmask((int)PhysicsCategory::Monster);
+	physicsBody->setContactTestBitmask((int)PhysicsCategory::Boss);
 	projectile->setPhysicsBody(physicsBody);
 
 
@@ -210,14 +259,13 @@ bool Level_2Scene::onTouchBegan(Touch * touch, Event *unused_event)
 }
 
 
-bool Level_2Scene::onContactBegan(PhysicsContact &contact)
+bool Mini_Boss_Scene::onContactBegan(PhysicsContact &contact)
 {
 	auto nodeEnemy = contact.getShapeA()->getBody()->getNode();//could be enemy or visa veras 
 	auto nodeProjectile = contact.getShapeB()->getBody()->getNode();//could be projectile or visa versa 
 
 
 	nodeEnemy->removeFromParent();//remove the enemy 
-	CCLOG("removed");
 	SimpleAudioEngine::getInstance()->playEffect(DEATH_SOUND_SFX);//enemy dying sound
 	nodeProjectile->removeFromParent();//remove the projectile 
 	CCLOG("point added");
@@ -228,28 +276,28 @@ bool Level_2Scene::onContactBegan(PhysicsContact &contact)
 	scoreLabel->setString(tempScore->getCString());
 	//if score reaches 10 new level or end game scene with transmitions to gameOverscene or new scene 
 
-	if (score == 20)
+	if (score == 30)
 	{
-		auto scene = Level_3_Scene::createScene();
+		auto scene = Mini_Boss_Scene::createScene();
 		Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
 	}
 
 	return true;
 }
 
-void Level_2Scene::SetIsScored()
+void Mini_Boss_Scene::SetIsScored()
 {
 	scored = true;
 }
 
-bool Level_2Scene::GetIsScored()
+bool Mini_Boss_Scene::GetIsScored()
 {
 	return scored;
 }
 
 
 
-void Level_2Scene::menuCloseCallback(Ref* pSender)// setting up the close button "quit"
+void Mini_Boss_Scene::menuCloseCallback(Ref* pSender)// setting up the close button "quit"
 {
 	Director::getInstance()->end();
 
@@ -259,7 +307,7 @@ void Level_2Scene::menuCloseCallback(Ref* pSender)// setting up the close button
 
 }
 
-void Level_2Scene::GoToMainMenuScene(Ref *sender)
+void Mini_Boss_Scene::GoToMainMenuScene(Ref *sender)
 {
 	auto scene = MainMenuScene::createScene();
 	Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));

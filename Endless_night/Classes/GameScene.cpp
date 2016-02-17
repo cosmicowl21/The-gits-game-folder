@@ -217,6 +217,7 @@ bool GameScene::onContactBegan(PhysicsContact &contact)
 
 
 	nodeEnemy->removeFromParent();//remove the enemy 
+	CCLOG("Removed");
 	SimpleAudioEngine::getInstance()->playEffect(DEATH_SOUND_SFX);//enemy dying sound
 	nodeProjectile->removeFromParent();//remove the projectile 
 	CCLOG("point added");
