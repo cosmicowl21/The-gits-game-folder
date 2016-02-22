@@ -2,6 +2,7 @@
 #include "SimpleAudioEngine.h"//iporting the audio engine
 #include "MainMenuScene.h"
 #include "Definitions.h"
+#include "Mini_Boss_Scene.h"
 #include "GameOverScene.h"
 
 
@@ -100,7 +101,7 @@ bool Level_3_Scene::init()//initing the game so the scene can be made
 	__String *tempScore = __String::createWithFormat("%i", score);
 
 	scoreLabel = Label::create(tempScore->getCString(), "fonts/Marker felt.ttf", winSize.height* SCORE_FONT_SIZE);
-	scoreLabel->setColor(Color3B::WHITE);
+	scoreLabel->setColor(Color3B::RED);
 	scoreLabel->setAnchorPoint(ccp(0, 1));
 	scoreLabel->setPosition(winSize.width / 2 + origin.x, winSize.height * SCORE_FONT_SIZE);
 
@@ -228,7 +229,7 @@ bool Level_3_Scene::onContactBegan(PhysicsContact &contact)
 
 	if (score == 30)
 	{
-		auto scene = Level_3_Scene::createScene();
+		auto scene = Mini_Boss_Scene::createScene();
 		Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
 	}
 
