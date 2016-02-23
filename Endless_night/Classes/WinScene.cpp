@@ -3,7 +3,7 @@
 #include "LeaderBoard.h"
 #include "Definitions.h"
 #include "MainMenuScene.h"
-#include "Quit.h"
+//#include "Quit.h"
 
 USING_NS_CC;
 
@@ -90,19 +90,19 @@ bool WinScene::init()
 void WinScene::GoToGameScene(Ref *sender)//go to game scene method implementation 
 {
 	auto scene = GameScene::createScene();
-	Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
+	Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
 }
 
 void WinScene::GoToMainMenuScene(Ref *sender)//go to game scene method implementation 
 {
 	auto scene = MainMenuScene::createScene();
-	Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
+	Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
 }
 
 void WinScene::GoToLeaderBoard(Ref *sender)//go to game scene method implementation 
 {
 	auto scene = LeaderBoard::createScene();
-	Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
+	Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
 }
 
 void WinScene::menuCloseCallback(Ref* pSender)

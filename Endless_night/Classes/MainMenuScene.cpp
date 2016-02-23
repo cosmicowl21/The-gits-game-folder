@@ -5,7 +5,7 @@
 #include "Definitions.h"
 #include "TheOptionsScene.h"
 #include "SimpleAudioEngine.h"
-#include "Quit.h"
+//#include "Quit.h"
 #include "HowToScene.h"
 
 using namespace CocosDenshion;
@@ -88,13 +88,13 @@ bool MainMenuScene::init()
 void MainMenuScene::GoToGameScene(Ref *sender)//go to game scene method implementation 
 {
 	auto scene = GameScene::createScene();
-	Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
+	Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
 }
 
 void MainMenuScene::GoToTheOptionsScene(Ref *sender)//go to game scene method implementation 
 {
 	auto scene = TheOptionsScene::createScene();
-	Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
+	Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
 }
 
 void MainMenuScene::menuCloseCallback(Ref* pSender)

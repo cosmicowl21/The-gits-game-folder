@@ -42,5 +42,5 @@ bool TheOptionsScene::init()
 void TheOptionsScene::GoToMainMenuScene(Ref *sender)//go to game scene method implementation 
 {
 	auto scene = MainMenuScene::createScene();
-	Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
+	Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
 }

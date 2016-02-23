@@ -18,7 +18,8 @@ public:
 	static cocos2d::Scene* createScene();// creating the scene from here 
 	virtual bool init();// creating the bool init class 
 	//void addMonster(float dt);// creating the monster class
-	void addMiniBoss(float dt);
+	void addMiniBoss();
+	Vector<Sprite*>EnemyList;
 	bool onTouchBegan(Touch * touch, Event *unused_event);
 	bool onContactBegan(PhysicsContact &contact);
 	void menuCloseCallback(cocos2d::Ref* pSender);
