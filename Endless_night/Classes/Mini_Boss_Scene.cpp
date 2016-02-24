@@ -3,6 +3,7 @@
 #include "MainMenuScene.h"
 #include "Definitions.h"
 #include "GameOverScene.h"
+#include"EndGameScene.h"
 
 
 using namespace CocosDenshion; // namespace for audio engine 
@@ -62,12 +63,12 @@ bool Mini_Boss_Scene::init()//initing the game so the scene can be made
 	_player = Sprite::create("cannon.png");//creating the player, player is made in the header file 
 	_player->setPosition(Vec2(winSize.width * 0.1, winSize.height * 0.5));//setting the players location 
 	this->addChild(_player);//adding the player to the scene
-
-
+	addMiniBoss();
+	//this->schedule(schedule_selector(Mini_Boss_Scene::addMiniBoss));
 	// this is not used now as the mini boss is the only enemy on screen
 	//adding monsters randomly at ? per second intervial 
 	//srand((unsigned int)time(nullptr));
-//	this->schedule(schedule_selector(Mini_Boss_Scene::addMonster), 0.4);
+	//this->schedule(schedule_selector(Mini_Boss_Scene::addMiniBoss));
 
 	//this->schedule(schedule_selector(GameScene::GoToGameOverScene), 20.0f);
 
@@ -160,7 +161,7 @@ void Mini_Boss_Scene::addMonster(float dt)
 }//end of monster 
 */// this is for adding the monsters to the scene , not used at the moment
 
-void Mini_Boss_Scene::addMiniBoss(float dt)
+void Mini_Boss_Scene::addMiniBoss()
 {
 	auto MiniBoss = Sprite::create("miniboss1.png");//making the enemy 
 
@@ -191,6 +192,8 @@ void Mini_Boss_Scene::addMiniBoss(float dt)
 	int randomY = (rand() % rangeY) + minY;
 
 	MiniBoss->setPosition(Vec2(selfContentSize.width + MiniBossContentSize.width / 2, randomY));
+	//MiniBoss->retain();
+	EnemyList.pushBack(MiniBoss);
 	this->addChild(MiniBoss);//adding enemy to the layer 
 
 	// 2
@@ -203,6 +206,7 @@ void Mini_Boss_Scene::addMiniBoss(float dt)
 	//moving and taking off when collided 
 	auto actionMove = MoveTo::create(randomDuration, Vec2(-MiniBossContentSize.width / 2, randomY));
 	auto actionRemove = RemoveSelf::create();
+	
 	MiniBoss->runAction(Sequence::create(actionMove, actionRemove, nullptr));
 
 }// end of mini boss
@@ -276,10 +280,10 @@ bool Mini_Boss_Scene::onContactBegan(PhysicsContact &contact)
 	scoreLabel->setString(tempScore->getCString());
 	//if score reaches 10 new level or end game scene with transmitions to gameOverscene or new scene 
 
-	if (score == 30)
+	if (score == 1)
 	{
-		auto scene = Mini_Boss_Scene::createScene();
-		Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
+		auto scene = EndGameScene::createScene();
+		Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
 	}
 
 	return true;
@@ -310,11 +314,11 @@ void Mini_Boss_Scene::menuCloseCallback(Ref* pSender)// setting up the close but
 void Mini_Boss_Scene::GoToMainMenuScene(Ref *sender)
 {
 	auto scene = MainMenuScene::createScene();
-	Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
+	Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
 }
 
 //void GameScene::GoToGameOverScene(float dt)
 //{
 //auto scene = GameOverScene::createScene();
-//Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
+//Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
 //}

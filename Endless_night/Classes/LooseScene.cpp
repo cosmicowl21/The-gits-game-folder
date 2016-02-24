@@ -3,7 +3,7 @@
 #include "LeaderBoard.h"
 #include "Definitions.h"
 #include "MainMenuScene.h"
-#include "Quit.h"
+//#include "Quit.h"
 
 USING_NS_CC;
 
@@ -89,19 +89,19 @@ bool LooseScene::init()
 void LooseScene::GoToGameScene(Ref *sender)//go to game scene method implementation 
 {
 	auto scene = GameScene::createScene();
-	Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
+	Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
 }
 
 void LooseScene::GoToMainMenuScene(Ref *sender)//go to game scene method implementation 
 {
 	auto scene = MainMenuScene::createScene();
-	Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
+	Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
 }
 
 void LooseScene::GoToLeaderBoard(Ref *sender)//go to game scene method implementation 
 {
 	auto scene = LeaderBoard::createScene();
-	Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
+	Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
 }
 
 void LooseScene::menuCloseCallback(Ref* pSender)

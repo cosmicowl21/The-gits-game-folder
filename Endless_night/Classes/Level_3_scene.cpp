@@ -123,7 +123,7 @@ void Level_3_Scene::addMonster(float dt)
 
 	//setting up the physics 
 	// 2
-	physicsBody->setDynamic(true);
+	physicsBody->setDynamic(false);
 	// 3
 	physicsBody->setCategoryBitmask((int)PhysicsCategory::Monster);
 	physicsBody->setCollisionBitmask((int)PhysicsCategory::None);
@@ -147,7 +147,7 @@ void Level_3_Scene::addMonster(float dt)
 
 	// 2
 	int minDuration = 10.0;
-	int maxDuration = 14.0;
+	int maxDuration = 11.0;
 	int rangeDuration = maxDuration - minDuration;
 	int randomDuration = (rand() % rangeDuration) + minDuration;
 
@@ -230,7 +230,7 @@ bool Level_3_Scene::onContactBegan(PhysicsContact &contact)
 	if (score == 30)
 	{
 		auto scene = Mini_Boss_Scene::createScene();
-		Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
+		Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
 	}
 
 	return true;
@@ -261,11 +261,11 @@ void Level_3_Scene::menuCloseCallback(Ref* pSender)// setting up the close butto
 void Level_3_Scene::GoToMainMenuScene(Ref *sender)
 {
 	auto scene = MainMenuScene::createScene();
-	Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
+	Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
 }
 
 //void GameScene::GoToGameOverScene(float dt)
 //{
 //auto scene = GameOverScene::createScene();
-//Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
+//Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
 //}
