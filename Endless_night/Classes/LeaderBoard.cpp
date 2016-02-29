@@ -79,7 +79,7 @@ bool LeaderBoard::init()
 
     // add the sprite as a child to this layer
     this->addChild(sprite, 0);
-    
+
     return true;
 }
 
@@ -94,5 +94,5 @@ void LeaderBoard::menuCloseCallback(Ref* pSender)
 void LeaderBoard::GoToMainMenuScene(Ref* sender)
 {
 	auto scene = MainMenuScene::createScene();
-	Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
+	Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
 }
