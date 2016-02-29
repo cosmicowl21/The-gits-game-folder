@@ -40,6 +40,7 @@ Scene* Level_2Scene::createScene()
 
 	// return the scene
 	return scene;//returning the scene so it can be made 
+	
 }
 
 // on "init" you need to initialize your instance
