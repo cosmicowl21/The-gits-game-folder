@@ -7,6 +7,15 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 
+/*
+This the class that creates 
+*The database connection
+*The DataSelect
+*The DataInsert
+*The DataUpdate
+*The DataDelete
+*/
+
 namespace Data
 {
     public partial class DataConnecter
@@ -15,6 +24,7 @@ namespace Data
         SqlConnection ABC = new SqlConnection("Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename="G:\endlesnight - Copy\proj.win32\Database\Hi.mdf";Integrated Security=True;Connect Timeout=30");
         SqlConnection AC = new SqlConnection("Data Source=(LocalDB)=MSSQLLocalDB;AttachDbFilename="G:\endlesnight - Copy\proj.win32\Database\Hi.mdf";Integrated Security=True;Connect Timeout=30");
         */
+
         protected SqlDataAdapter DataAdaptor1 = new SqlDataAdapter();
         public string ErrorMessage = "";
 
@@ -27,10 +37,19 @@ namespace Data
 
         public DataTable DataSelect(string query)
         {
+            //Here is the Dataselect  
+            
             DataTable dt = new DataTable();
 
             try
             {
+                /*
+                The try will get the query
+                It will open a connection
+                Fill the dataTable
+                Then close the connection
+                If there is an error a message will alert the user
+                */
                 DataAdaptor1.SelectCommand.CommandText = query;
                 DataAdaptor1.SelectCommand.Connection.Open();
                 DataAdaptor1.Fill(dt);
@@ -39,6 +58,10 @@ namespace Data
             }
             catch(Exception err)
             {
+                /*
+                The catch will get any error messages
+                Then it will close the connection 
+                */
                 ErrorMessage = err.Message;
                 DataAdaptor1.SelectCommand.Connection.Close();
             }
@@ -51,6 +74,14 @@ namespace Data
 
             try
             {
+             /*
+             The try will get the query
+             It will open a connection
+             It shows the effected rows 
+             Then close the connection
+             If there is an error a message will alert the user
+             Result is returned to show what was altered
+             */
                 DataAdaptor1.InsertCommand.CommandText = query;
                 DataAdaptor1.InsertCommand.Connection.Open();
                 Result = DataAdaptor1.InsertCommand.ExecuteNonQuery();
@@ -60,17 +91,23 @@ namespace Data
             }
             catch (Exception err)
             {
+               /*
+               The catch will get any error messages
+               Then it will close the connection 
+               */
                 ErrorMessage = err.Message;
                 DataAdaptor1.InsertCommand.Connection.Close();
                 return 0;
             }
-        }
-            public int DataUpdate(string query)
+          }
+        public int DataUpdate(string query)
         {
+            //DataUpdate returns DataInsert
             return DataInsert(query);
         }
         public int DataDelete(string query)
         {
+            //DataDelete returns DataInsert
             return DataInsert(query);
         }
         
