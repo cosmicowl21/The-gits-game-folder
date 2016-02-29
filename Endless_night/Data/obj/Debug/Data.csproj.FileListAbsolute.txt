@@ -1,0 +1,6 @@
+G:\endlesnight - Copy\Data\bin\Debug\Data.dll.config
+G:\endlesnight - Copy\Data\bin\Debug\Data.dll
+G:\endlesnight - Copy\Data\bin\Debug\Data.pdb
+G:\endlesnight - Copy\Data\obj\Debug\Data.csprojResolveAssemblyReference.cache
+G:\endlesnight - Copy\Data\obj\Debug\Data.dll
+G:\endlesnight - Copy\Data\obj\Debug\Data.pdb

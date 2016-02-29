@@ -4,21 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
-using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.IO;
 
 namespace Data
 {
-    public class DataConnecter
+    public partial class DataConnecter
     {
-        protected OleDbDataAdapter DataAdaptor1 = new OleDbDataAdapter();
+        /*
+        SqlConnection ABC = new SqlConnection("Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename="G:\endlesnight - Copy\proj.win32\Database\Hi.mdf";Integrated Security=True;Connect Timeout=30");
+        SqlConnection AC = new SqlConnection("Data Source=(LocalDB)=MSSQLLocalDB;AttachDbFilename="G:\endlesnight - Copy\proj.win32\Database\Hi.mdf";Integrated Security=True;Connect Timeout=30");
+        */
+        protected SqlDataAdapter DataAdaptor1 = new SqlDataAdapter();
         public string ErrorMessage = "";
 
         public DataConnecter(string ConnectionString)
         {
-            OleDbConnection Connection1 = new OleDbConnection(ConnectionString);
-            this.DataAdaptor1.SelectCommand = new OleDbCommand("", Connection1);
-            this.DataAdaptor1.InsertCommand = new OleDbCommand("", Connection1);
+            SqlConnection Connection1 = new SqlConnection(ConnectionString);
+            this.DataAdaptor1.SelectCommand = new SqlCommand("", Connection1);
+            this.DataAdaptor1.InsertCommand = new SqlCommand("", Connection1);
         }
 
         public DataTable DataSelect(string query)
@@ -69,5 +73,6 @@ namespace Data
         {
             return DataInsert(query);
         }
+        
     }
 }
