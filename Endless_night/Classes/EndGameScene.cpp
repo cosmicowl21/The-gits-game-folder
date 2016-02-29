@@ -101,19 +101,19 @@ bool EndGameScene::init()
 void EndGameScene::GoToLeaderBoard(Ref* psender)
 {
 	auto scene = LeaderBoard::createScene();
-	Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
+	Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
 }
 
 void EndGameScene::GoToGameScene(Ref* psender)
 {
 	auto scene = GameScene::createScene();
-	Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
+	Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
 }
 
 void EndGameScene::GoToMainMenuScene(Ref* psender)
 {
 	auto scene = MainMenuScene::createScene();
-	Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
+	Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
 }
 
 

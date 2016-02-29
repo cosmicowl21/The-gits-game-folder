@@ -94,5 +94,5 @@ void LeaderBoard::menuCloseCallback(Ref* pSender)
 void LeaderBoard::GoToMainMenuScene(Ref* sender)
 {
 	auto scene = MainMenuScene::createScene();
-	Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
+	Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
 }
