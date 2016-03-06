@@ -11,19 +11,21 @@ class Level_2Scene : public cocos2d::Layer
 private:
 	Sprite* _player;
 	Sprite* _player2;
-	unsigned int score;
 	cocos2d::Label * scoreLabel;
 
 public:
 	static cocos2d::Scene* createScene();// creating the scene from here 
 	virtual bool init();// creating the bool init calss 
+	void addColision(float dt);
 	void addMonster(float dt);// creating the monster class
+	void addPlayer();
 	bool onTouchBegan(Touch * touch, Event *unused_event);
 	bool onContactBegan(PhysicsContact &contact);
 	void menuCloseCallback(cocos2d::Ref* pSender);
 	bool scored;
 	void SetIsScored();
 	bool GetIsScored();
+	int getScore();
 	void GoToMainMenuScene(Ref *sender);
 	void GoToGameOverScene();
 

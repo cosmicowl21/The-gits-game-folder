@@ -4,15 +4,18 @@
 #include "Definitions.h"
 #include "Level_3_scene.h"
 #include "GameOverScene.h"
+#include "Database.h"
+#include "ui/CocosGUI.h"
+#include <iostream>
 
+int score2;
 
 using namespace CocosDenshion; // namespace for audio engine 
 using namespace cocos2d;
 
-
 USING_NS_CC;
 
-#define BOSS_MUSIC_SFX "Boss.mp3"//sound init for music
+#define BACKGROUND_MUSIC_SFX "main-game-theme.mp3"//sound init for music
 #define TOWER_SHOOTING_SFX "grenade.mp3" //sound init for music
 #define DEATH_SOUND_SFX "whip.mp3"//sound for the enemy death 
 #define COCOS2D_DEBUG 1
@@ -40,7 +43,6 @@ Scene* Level_2Scene::createScene()
 
 	// return the scene
 	return scene;//returning the scene so it can be made 
-	
 }
 
 // on "init" you need to initialize your instance
@@ -61,13 +63,13 @@ bool Level_2Scene::init()//initing the game so the scene can be made
 	backgroundSprite->setPosition(Point(winSize.width / 2 + origin.x, winSize.height / 2 + origin.y));
 	this->addChild(backgroundSprite);///adding the bacground to the scene
 	// 4
-	_player = Sprite::create("cannon.png");//creating the player, player is made in the header file 
+	_player = Sprite::create("Knight.png");//creating the player, player is made in the header file 
 	_player->setPosition(Vec2(winSize.width * 0.1, winSize.height * 0.5));//setting the players location 
 	this->addChild(_player);//adding the player to the scene
 
 	//adding monsters randomly at 1 second intervial 
 	//srand((unsigned int)time(nullptr));
-	this->schedule(schedule_selector(Level_2Scene::addMonster), 0.7);
+	this->schedule(schedule_selector(Level_2Scene::addMonster), 1);
 
 	//this->schedule(schedule_selector(GameScene::GoToGameOverScene), 20.0f);
 
@@ -84,7 +86,7 @@ bool Level_2Scene::init()//initing the game so the scene can be made
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
 
 	//playing the background music 
-	SimpleAudioEngine::getInstance()->playBackgroundMusic(BOSS_MUSIC_SFX, true);
+	SimpleAudioEngine::getInstance()->playBackgroundMusic(BACKGROUND_MUSIC_SFX, true);
 
 	// button to go back to the main menu 
 	auto menu = MenuItemImage::create("menu.png", "menuClicked.png", CC_CALLBACK_1(Level_2Scene::GoToMainMenuScene, this));
@@ -97,9 +99,9 @@ bool Level_2Scene::init()//initing the game so the scene can be made
 	const float ScoreFontSize = 24;
 	const float  ScorePostitionX = 24;
 	const float ScorePostitionY = 12;
-	score = 0;
+	score2 = 0;
 
-	__String *tempScore = __String::createWithFormat("%i", score);
+	__String *tempScore = __String::createWithFormat("%i", score2);
 
 	scoreLabel = Label::create(tempScore->getCString(), "fonts/Marker felt.ttf", winSize.height* SCORE_FONT_SIZE);
 	scoreLabel->setColor(Color3B::RED);
@@ -113,27 +115,36 @@ bool Level_2Scene::init()//initing the game so the scene can be made
 
 }//end is init()
 
+//monsters classes and movement
 void Level_2Scene::addMonster(float dt)
 {
-	auto monster = Sprite::create("monster.png");//making the enemy 
+	auto monster = Sprite::create("Shadow1.png");//making the enemy 
 
 	//giving the monster some attributes 
 	auto monsterSize = monster->getContentSize();
 	auto physicsBody = PhysicsBody::createBox(Size(monsterSize.width, monsterSize.height),
 		PhysicsMaterial(0.1f, 1.0f, 0.0f));
-
-	//setting up the physics 
-	// 2
-	physicsBody->setDynamic(false);
+	physicsBody->setDynamic(true);
 	// 3
 	physicsBody->setCategoryBitmask((int)PhysicsCategory::Monster);
 	physicsBody->setCollisionBitmask((int)PhysicsCategory::None);
 	physicsBody->setContactTestBitmask((int)PhysicsCategory::Projectile);
 
+	monster->setPhysicsBody(physicsBody);
+	Vector<SpriteFrame*> animFrames(4);
 
+	for (int i = 1; i < 5; i++)
+	{
+		std::stringstream ss;
+		ss << "Shadow" << i << ".png";
+		String str = ss.str();
+		auto frame = SpriteFrame::create(ss.str(), Rect(0, 0, 60, 105));
+		animFrames.pushBack(frame);
+	}
 
-
-	monster->setPhysicsBody(physicsBody);// adding monster to the physics engine so it can be colided 
+	auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+	auto animate = Animate::create(animation);
+	monster->runAction(RepeatForever::create(animate));
 	// 1
 	// giving the monster some movement and coordnates
 	auto monsterContentSize = monster->getContentSize();
@@ -147,8 +158,8 @@ void Level_2Scene::addMonster(float dt)
 	this->addChild(monster);//adding enemy to the layer 
 
 	// 2
-	int minDuration = 10.0;
-	int maxDuration = 14.0;
+	int minDuration = 3.0;
+	int maxDuration = 30.0;
 	int rangeDuration = maxDuration - minDuration;
 	int randomDuration = (rand() % rangeDuration) + minDuration;
 
@@ -157,6 +168,7 @@ void Level_2Scene::addMonster(float dt)
 	auto actionMove = MoveTo::create(randomDuration, Vec2(-monsterContentSize.width / 2, randomY));
 	auto actionRemove = RemoveSelf::create();
 	monster->runAction(Sequence::create(actionMove, actionRemove, nullptr));
+
 }
 
 bool Level_2Scene::onTouchBegan(Touch * touch, Event *unused_event)
@@ -175,7 +187,7 @@ bool Level_2Scene::onTouchBegan(Touch * touch, Event *unused_event)
 	}
 
 	// 4
-	auto projectile = Sprite::create("cannonball.png");//making the projectile 
+	auto projectile = Sprite::create("Spear.png");//making the projectile 
 	projectile->setPosition(_player->getPosition());
 	this->addChild(projectile);//adding it to the layer 
 
@@ -210,29 +222,27 @@ bool Level_2Scene::onTouchBegan(Touch * touch, Event *unused_event)
 	return true;
 }
 
-
 bool Level_2Scene::onContactBegan(PhysicsContact &contact)
 {
 	auto nodeEnemy = contact.getShapeA()->getBody()->getNode();//could be enemy or visa veras 
 	auto nodeProjectile = contact.getShapeB()->getBody()->getNode();//could be projectile or visa versa 
 
-
+	if (nodeEnemy)
 	nodeEnemy->removeFromParent();//remove the enemy 
 	CCLOG("removed");
 	SimpleAudioEngine::getInstance()->playEffect(DEATH_SOUND_SFX);//enemy dying sound
 	nodeProjectile->removeFromParent();//remove the projectile 
 	CCLOG("point added");
-	score++;
+	score2++;
 
-
-	__String * tempScore = __String::createWithFormat("%i", score);
+	__String * tempScore = __String::createWithFormat("%d", score2);
 	scoreLabel->setString(tempScore->getCString());
 	//if score reaches 10 new level or end game scene with transmitions to gameOverscene or new scene 
 
-	if (score == 20)
+	if (score2 == 1)
 	{
 		auto scene = Level_3_Scene::createScene();
-		Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
+		Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
 	}
 
 	return true;
@@ -248,7 +258,11 @@ bool Level_2Scene::GetIsScored()
 	return scored;
 }
 
-
+int Level_2Scene::getScore()
+{
+	CCLOG("Score: %d", score2);
+	return score2;
+}
 
 void Level_2Scene::menuCloseCallback(Ref* pSender)// setting up the close button "quit"
 {
@@ -263,11 +277,11 @@ void Level_2Scene::menuCloseCallback(Ref* pSender)// setting up the close button
 void Level_2Scene::GoToMainMenuScene(Ref *sender)
 {
 	auto scene = MainMenuScene::createScene();
-	Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
+	Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
 }
 
 //void GameScene::GoToGameOverScene(float dt)
 //{
 //auto scene = GameOverScene::createScene();
-//Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
+//Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
 //}
