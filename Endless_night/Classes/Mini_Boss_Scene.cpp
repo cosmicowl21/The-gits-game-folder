@@ -9,7 +9,7 @@
 #include "ui/CocosGUI.h"
 #include <iostream>
 
-unsigned int score4;
+int score4;
 
 using namespace CocosDenshion; // namespace for audio engine 
 using namespace cocos2d;
@@ -173,7 +173,7 @@ void Mini_Boss_Scene::addMonster(float dt)
 	monster->setPosition(Vec2(selfContentSize.width + monsterContentSize.width / 2, randomY));
 	this->addChild(monster);//adding enemy to the layer 
 
-							// 2
+	// 2
 	int minDuration = 9.0;
 	int maxDuration = 30.0;
 	int rangeDuration = maxDuration - minDuration;
@@ -229,7 +229,7 @@ void Mini_Boss_Scene::addMiniBoss()
 	EnemyList.pushBack(MiniBoss);
 	this->addChild(MiniBoss);//adding enemy to the layer 
 
-							 // 2
+	// 2
 	int minDuration = 9.0;
 	int maxDuration = 30.0;
 	int rangeDuration = maxDuration - minDuration;
@@ -245,7 +245,6 @@ void Mini_Boss_Scene::addMiniBoss()
 		delay->clone(), nullptr);
 
 	MiniBoss->runAction(Sequence::create(delay, actionMove, actionRemove, nullptr));
-
 
 }// end of mini boss
 
@@ -267,8 +266,6 @@ bool Mini_Boss_Scene::onTouchBegan(Touch * touch, Event *unused_event)
 	projectile->setPosition(_player->getPosition());
 	this->addChild(projectile);//adding it to the layer 
 
-
-
 							   //setting the phycis of the projectile 
 	auto projectileSize = projectile->getContentSize();
 	auto physicsBody = PhysicsBody::createCircle(projectileSize.width / 2);
@@ -277,8 +274,6 @@ bool Mini_Boss_Scene::onTouchBegan(Touch * touch, Event *unused_event)
 	physicsBody->setCollisionBitmask((int)PhysicsCategory::None);
 	physicsBody->setContactTestBitmask((int)PhysicsCategory::Boss);
 	projectile->setPhysicsBody(physicsBody);
-
-
 
 	// 5
 	offset.normalize();
@@ -315,7 +310,7 @@ bool Mini_Boss_Scene::onContactBegan(PhysicsContact &contact)
 	scoreLabel->setString(tempScore->getCString());
 	//if score reaches 10 new level or end game scene with transmitions to gameOverscene or new scene 
 
-	if (score4 == 7)//
+	if (score4 == 40)
 	{
 		auto scene = GameOverScene::createScene();
 		Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
@@ -326,8 +321,8 @@ bool Mini_Boss_Scene::onContactBegan(PhysicsContact &contact)
 
 int Mini_Boss_Scene::getScore()
 {
-	CCLOG("Score: %d", score4);
-	return score4;
+	CCLOG("Score: %d", score4);//
+	return score4;//
 }
 
 void Mini_Boss_Scene::menuCloseCallback(Ref* pSender)// setting up the close button "quit"

@@ -240,7 +240,7 @@ bool Level_3_Scene::onContactBegan(PhysicsContact &contact)
 	scoreLabel->setString(tempScore->getCString());
 	//if score reaches 10 new level or end game scene with transmitions to gameOverscene or new scene 
 
-	if (score3 == 1)
+	if (score3 == 30)
 	{
 		auto scene = Mini_Boss_Scene::createScene();
 		Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));

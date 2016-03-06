@@ -239,7 +239,7 @@ bool Level_2Scene::onContactBegan(PhysicsContact &contact)
 	scoreLabel->setString(tempScore->getCString());
 	//if score reaches 10 new level or end game scene with transmitions to gameOverscene or new scene 
 
-	if (score2 == 1)
+	if (score2 == 20)
 	{
 		auto scene = Level_3_Scene::createScene();
 		Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
