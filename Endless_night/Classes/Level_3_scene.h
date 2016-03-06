@@ -11,7 +11,6 @@ class Level_3_Scene : public cocos2d::Layer
 private:
 	Sprite* _player;
 	Sprite* _player2;
-	unsigned int score;
 	cocos2d::Label * scoreLabel;
 
 public:
@@ -24,7 +23,9 @@ public:
 	bool scored;
 	void SetIsScored();
 	bool GetIsScored();
+	int getScore();
 	void GoToMainMenuScene(Ref *sender);
+	void GoToLeaderBoard(Ref * sender);
 	void GoToGameOverScene();
 
 	CREATE_FUNC(Level_3_Scene);
