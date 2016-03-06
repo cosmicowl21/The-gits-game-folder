@@ -9,7 +9,7 @@
 #include "ui/CocosGUI.h"
 #include <iostream>
 
-int score;
+unsigned int score4;
 
 using namespace CocosDenshion; // namespace for audio engine 
 using namespace cocos2d;
@@ -108,9 +108,9 @@ bool Mini_Boss_Scene::init()//initing the game so the scene can be made
 	const float ScoreFontSize = 22;
 	const float  ScorePostitionX = 24;
 	const float ScorePostitionY = 12;
-	score = 0;
+	score4 = 0;//
 
-	__String *tempScore = __String::createWithFormat("Score:%i", score);
+	__String *tempScore = __String::createWithFormat("Score:%i", score4);//
 
 	scoreLabel = Label::create(tempScore->getCString(), "fonts/Marker felt.ttf", winSize.height* SCORE_FONT_SIZE);
 	scoreLabel->setColor(Color3B::RED);
@@ -256,8 +256,6 @@ bool Mini_Boss_Scene::onTouchBegan(Touch * touch, Event *unused_event)
 	Vec2 touchLocation = touch->getLocation();
 	Vec2 offset = touchLocation - _player->getPosition();
 
-
-
 	// 3
 	if (offset.x < 0) //offset is the area at which the "bullet" will fire 
 	{
@@ -300,7 +298,6 @@ bool Mini_Boss_Scene::onTouchBegan(Touch * touch, Event *unused_event)
 	return true;
 }
 
-
 bool Mini_Boss_Scene::onContactBegan(PhysicsContact &contact)
 {
 	auto nodeEnemy = contact.getShapeA()->getBody()->getNode();//could be enemy or visa veras 
@@ -311,14 +308,14 @@ bool Mini_Boss_Scene::onContactBegan(PhysicsContact &contact)
 	SimpleAudioEngine::getInstance()->playEffect(DEATH_SOUND_SFX);//enemy dying sound
 	nodeProjectile->removeFromParent();//remove the projectile 
 	CCLOG("point added");
-	score++;
+	score4++;
 
 
-	__String * tempScore = __String::createWithFormat("Score:%i", score);
+	__String * tempScore = __String::createWithFormat("Score:%i", score4);
 	scoreLabel->setString(tempScore->getCString());
 	//if score reaches 10 new level or end game scene with transmitions to gameOverscene or new scene 
 
-	if (score == 7)
+	if (score4 == 7)//
 	{
 		auto scene = GameOverScene::createScene();
 		Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
@@ -329,8 +326,8 @@ bool Mini_Boss_Scene::onContactBegan(PhysicsContact &contact)
 
 int Mini_Boss_Scene::getScore()
 {
-	CCLOG("Score: %d", score);
-	return score;
+	CCLOG("Score: %d", score4);
+	return score4;
 }
 
 void Mini_Boss_Scene::menuCloseCallback(Ref* pSender)// setting up the close button "quit"

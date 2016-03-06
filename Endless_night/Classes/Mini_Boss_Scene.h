@@ -11,7 +11,6 @@ class Mini_Boss_Scene : public cocos2d::Layer
 private:
 	Sprite* _player;
 	Sprite* _player2;
-//	unsigned int score;
 	cocos2d::Label * scoreLabel;
 	cocos2d::Label * livesLabel;
 	int towerHp;
