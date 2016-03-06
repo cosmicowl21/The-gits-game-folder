@@ -14,7 +14,6 @@ private:
 	CCTMXLayer *_background;
 	Sprite* _player;
 	Sprite* _player2;
-	unsigned int score;
 	cocos2d::Label * scoreLabel;
 	cocos2d::Label * livesLabel;
 	int enemyDamage;
@@ -52,7 +51,6 @@ public:
 	CC_SYNTHESIZE_RETAIN(Array*, _waypoints, Waypoints);
 	
 	CREATE_FUNC(GameScene);
-	
 };
 
 =======

@@ -6,7 +6,12 @@
 #include "Level_2Scene.h"
 #include "GameOverScene.h"
 #include "Waypoints.h"
+#include "Level_1_Splash_Scene.h"
+#include "Box2D\Box2D.h"
+#include "ui/CocosGUI.h"
+#include <iostream>
 
+int score1;
 
 using namespace CocosDenshion; // namespace for audio engine 
 using namespace cocos2d;
@@ -72,8 +77,7 @@ bool GameScene::init()//initing the game so the scene can be made
 	enemyScore = 0;
 	gameOver = false;
 
-															 
-															 // 3
+	// 3
 	auto backgroundSprite = Sprite::create("backgroundCastle.png");// creating the background and adding a sprite
 	// setting the postition of the sprite on screen  using the size of the window
 	backgroundSprite->setPosition(Point(winSize.width / 2 + origin.x, winSize.height / 2 + origin.y));
@@ -84,10 +88,9 @@ bool GameScene::init()//initing the game so the scene can be made
 	//this->addChild(_level1Map);
 	///auto tiledMap = ("Castle Backgroud.tmx");
 
-
 	// 4
 	_player = Sprite::create("cannon.png");//creating the player, player is made in the header file 
-	_player->setPosition(Vec2(winSize.width * 0.1, winSize.height * 0.5));//setting the players location 
+	_player->setPosition(Vec2(winSize.width * 0.1, winSize.height * 0));//setting the players location 
 	auto playerSize = _player->getContentSize();
 
 	auto physicsPlayer = PhysicsBody::createBox(Size(playerSize.width, playerSize.height),
@@ -139,9 +142,9 @@ bool GameScene::init()//initing the game so the scene can be made
 	const float ScoreFontSize = 24;
 	const float  ScorePostitionX = 24;
 	const float ScorePostitionY = 12;
-	score = 0;
+	score1 = 0;
 
-	__String *tempScore = __String::createWithFormat("Score:%i", score);
+	__String *tempScore = __String::createWithFormat("Score:%i", score1);
 
 	scoreLabel = Label::create(tempScore->getCString(), "fonts/Marker felt.ttf", winSize.height* SCORE_FONT_SIZE);
 	scoreLabel->setColor(Color3B::RED);
@@ -173,8 +176,6 @@ bool GameScene::init()//initing the game so the scene can be made
 	this->addWayPoints();
 
 	return true;// returning that all is ok as is a bool(booean class)
-
-	
 
 }//end is init()
 
@@ -294,14 +295,14 @@ bool GameScene::onContactBegan(PhysicsContact &contact)
 	SimpleAudioEngine::getInstance()->playEffect(DEATH_SOUND_SFX);//enemy dying sound
 	nodeProjectile->removeFromParent();//remove the projectile 
 	CCLOG("point added");
-	score++;
+	score1++;
 
 
-	__String * tempScore = __String::createWithFormat("score:%i", score);
+	__String * tempScore = __String::createWithFormat("score:%i",score);
 	scoreLabel->setString(tempScore->getCString());
-	//if score reaches 10 new level or end game scene with transmitions to gameOverscene or new scene 
+	//if score1 reaches 10 new level or end game scene with transmitions to gameOverscene or new scene 
 
-	if (score == 10)
+	if (score1 == 10)
 	{
 		auto scene = Level_2Scene::createScene();
 		Director::getInstance()->replaceScene(TransitionFade::create(TRANSITION_TIME, scene));
@@ -334,7 +335,7 @@ bool GameScene::onContactBeganEndGame(PhysicsContact &contact)
 	--lives;
 	__String * tempLives = __String::createWithFormat("Lives:%i", lives);
 	livesLabel->setString(tempLives->getCString());
-	//if score reaches 10 new level or end game scene with transmitions to gameOverscene or new scene
+	//if score1 reaches 10 new level or end game scene with transmitions to gameOverscene or new scene
 	if (lives == 0)  // if tower gets hit player loses life
 	{
 	auto scene = EndGameScene::createScene();
@@ -352,6 +353,12 @@ void GameScene::SetIsScored()
 bool GameScene::GetIsScored()
 {
 	return scored;
+}
+
+int GameScene::getScore()
+{
+	CCLOG("Score: %d", score1);
+	return score1;
 }
 
 bool GameScene::GetLives()
@@ -404,9 +411,6 @@ void GameScene::addWayPoints()
 	Waypoints* point6 = Waypoints::nodeWithTheGame(this, Point(-80, 440));
 	_waypoints->addObject(point6);
 }
-
-
-
 
 void GameScene::menuCloseCallback(Ref* pSender)// setting up the close button "quit"
 {
@@ -562,9 +566,9 @@ bool GameScene::init()//initing the game so the scene can be made
 	const float ScoreFontSize = 24;
 	const float  ScorePostitionX = 24;
 	const float ScorePostitionY = 19;
-	score = 0;
+	score1 = 0;
 
-	__String *tempScore = __String::createWithFormat("Score:%i", score);
+	__String *tempScore = __String::createWithFormat("Score:%i", score1);
 
 	scoreLabel = Label::create(tempScore->getCString(), "fonts/Marker felt.ttf", winSize.height* SCORE_FONT_SIZE);
 	scoreLabel->setColor(Color3B::RED);
@@ -589,8 +593,8 @@ bool GameScene::init()//initing the game so the scene can be made
 
 	this->addChild(livesLabel, 10);
 	return true;// returning that all is ok as is a bool(booean class)
-	// saving game data for high score
-	CCUserDefault::sharedUserDefault()->setIntegerForKey("score", score);
+	// saving game data for high score1
+	CCUserDefault::sharedUserDefault()->setIntegerForKey("score1", score1);
 	CCUserDefault::sharedUserDefault()->flush();
 	 
 	//waypoints
@@ -725,14 +729,14 @@ bool GameScene::onContactBegan(PhysicsContact &contact)
 	SimpleAudioEngine::getInstance()->playEffect(DEATH_SOUND_SFX);//enemy dying sound
 	nodeProjectile->removeFromParent();//remove the projectile 
 	CCLOG("point added");
-	score++;
+	score1++;
 
 
-	__String * tempScore = __String::createWithFormat("Score:%i", score);
+	__String * tempScore = __String::createWithFormat("Score:%i", score1);
 	scoreLabel->setString(tempScore->getCString());
 	//if score reaches 10 new level or end game scene with transmitions to gameOverscene or new scene 
 
-	if (score == 10)
+	if (score1 == 10)
 	{
 		auto scene = Level_2Scene::createScene();
 		Director::getInstance()->replaceScene(TransitionFade::create(TRANSATION_TIME, scene));
