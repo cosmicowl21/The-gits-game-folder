@@ -20,7 +20,7 @@ private:
 	//void GoToLeaderBoard(cocos2d::Ref *sender);
 	void GoToGameScene(cocos2d::Ref *sender);
 	void GoToMainMenuScene(cocos2d::Ref *sender);
-	void GoToLeaderBoard(cocos2d::Ref *sender);
+//	void GoToLeaderBoard(cocos2d::Ref *sender);
 
 };
 

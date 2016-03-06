@@ -3,12 +3,20 @@
 #include "MainMenuScene.h"
 #include "Definitions.h"
 //#include "LeaderBoard.h"
-#include "Database.h"
+//#include "Database.h"
 #include "Mini_Boss_Scene.h"
+#include "GameScene.h"
+#include "Level_2Scene.h"
+#include "Level_3_scene.h"
 #include "ui/CocosGUI.h"
 #include <iostream>
 
-int Pscore;
+int Level1score;
+int Level2score;
+int Level3score;
+int Level4score;
+int TScore;
+
 std::string name = "Please enter your Name:";
 ui::EditBox* Box;
 
@@ -38,9 +46,25 @@ bool GameOverScene::init()
 		return false;
 	}
 
-	Mini_Boss_Scene game;
-	Pscore = game.getScore();
-	CCLOG("Score: init: %i", Pscore);
+	GameScene Level1;
+	Level1score = Level1.getScore();
+	CCLOG("Score: init: %i", Level1score);
+
+	Level_2Scene Level2;
+	Level2score = Level2.getScore();
+	CCLOG("Score: init: %i", Level2score);
+
+	Level_3_Scene Level3;
+	Level3score = Level3.getScore();
+	CCLOG("Score: init: %i", Level3score);
+
+	Mini_Boss_Scene MiniBoss;
+	Level4score = MiniBoss.getScore();
+	CCLOG("Score: init: %i", Level4score);
+
+	GameOverScene Total;
+	TScore = Level1score + Level2score +Level3score + Level4score;
+	CCLOG("Score: init: %i", TScore);
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -125,8 +149,8 @@ bool GameOverScene::init()
 
 	Box = EBox;
 
-	CCLOG("Score: %d", Pscore);
-	auto nameLabel = Label::createWithTTF("Your Score: " + std::to_string(Pscore), "fonts/Marker Felt.ttf", 24);
+	CCLOG("Score: %d", TScore);
+	auto nameLabel = Label::createWithTTF("Your Score: " + std::to_string(TScore), "fonts/Marker Felt.ttf", 24);
 	nameLabel->setColor(Color3B::YELLOW);
 	nameLabel->setPosition(Vec2(origin.x + visibleSize.width / 2, 200));
 	this->addChild(nameLabel, 1);
