@@ -1,11 +1,11 @@
-#ifndef __MAIN_MENU_SCENE_H__
-#define __MAIN_MENU_SCENE_H__
+#ifndef __WIN_SCENE_H__
+#define __WIN_SCENE_H__
 
 #include "cocos2d.h"
 
 using namespace cocos2d;
 
-class MainMenuScene : public cocos2d::Layer
+class WinScene : public cocos2d::Layer
 {
 public:
     static cocos2d::Scene* createScene();
@@ -13,14 +13,14 @@ public:
     virtual bool init();
 
     // implement the "static create()" method manually
-	CREATE_FUNC(MainMenuScene);
+	CREATE_FUNC(WinScene);
 
 private:
-	void GoToTheOptionsScene(Ref *sender);
-	void GoToGameScene(Ref *sender);
+	void GoToMainMenuScene(Ref *sender);
+	void GoToGameScene(Ref *sender); 
+	void GoToLeaderBoard(Ref * sender);
 	void menuCloseCallback(cocos2d::Ref* pSender);
-	
 	
 };
 
-#endif // __MAIN_MENU_SCENE_H__
+#endif // __WIN_SCENE_H__

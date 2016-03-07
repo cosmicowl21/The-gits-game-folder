@@ -1,11 +1,11 @@
-#ifndef __GAME_SCENE_H__ // used so that hte header will only be used once per compile
-#define __GAME_SCENE_H__
+#ifndef __LEVEL_3_SCENE_H__ // used so that hte header will only be used once per compile
+#define __LEVEL_3_SCENE_H__
 
 #include "cocos2d.h"// brining in cocos funcality 
 #include "Box2D/Box2D.h"
 using namespace cocos2d; // namespace for cococs so you dont have to use cocos2d:: every time 
 
-class GameScene : public cocos2d::Layer
+class Level_3_Scene : public cocos2d::Layer
 {
 
 private:
@@ -13,9 +13,6 @@ private:
 	Sprite* _player2;
 	unsigned int score;
 	cocos2d::Label * scoreLabel;
-
-	CCTMXTiledMap *_tileMap;
-	CCTMXLayer *_background;
 
 public:
 	static cocos2d::Scene* createScene();// creating the scene from here 
@@ -29,9 +26,9 @@ public:
 	bool GetIsScored();
 	void GoToMainMenuScene(Ref *sender);
 	void GoToGameOverScene();
-	
-	CREATE_FUNC(GameScene);
-	
+
+	CREATE_FUNC(Level_3_Scene);
+
 };
 
-#endif // __GAME_SCENE_H__
+#endif // __LEVEL_2SCENE_H__
