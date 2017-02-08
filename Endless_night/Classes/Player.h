@@ -1,19 +1,39 @@
-#ifndef _PLAYER_H_
-#define _PLAYER_H_
 
-#include <iostream>
-#include <string>
+#pragma once
 
-class Player
+#include "cocos2d.h"
+using namespace cocos2d;
+
+class Player : public Sprite
 {
 public:
 
-	Player();
-	Player(std::string, int);
-	~Player();
+	float velocity_x;
+	float velocity_y;
 
-	std::string username;
-	int score;
+	int direction;
+	int facing_left;
+	int facing_right;
+	int facing_up;
+	int facing_down;
+	int facing_down_left;
+	int facing_down_right;
+	int facing_up_left;
+	int facing_up_right;
+	bool grounded;
+	bool jumping;
+
+	Animate *walk;
+	Size player_size;
+
+	Rect getCollisionBox();
+	Rect getUpperCollisionBox();
+
+	static Player* create();
+
+	void updateState(float delta);
+	void setupAnimation(const char* name);
+
+	Player(void);
+	virtual ~Player(void);
 };
-
-#endif
